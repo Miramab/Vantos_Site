@@ -1,0 +1,45 @@
+{% load basket_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+<style>
+  .btn-outline-primary {
+    color: chocolate;
+    width: 90%;
+    block-size: auto;
+    background-color: #FFF;
+    padding: 0.5em 0.6em;
+    border-radius: none;
+    border-color: chocolate;
+    text-decoration: none;
+    margin-bottom: 10px;
+    
+    
+  }
+
+  .btn-outline-primary:hover {
+    background-color: tan;
+    color: chocolate;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -ms-transition: 0.5s all
+  }
+</style>
+
+
+
+{% purchase_info_for_product request product as session %}
+
+{% if session.availability.is_available_to_buy %}
+{% basket_form request product 'single' as basket_form %}
+<form action="{% url 'basket:add' pk=product.pk %}" method="post">
+  {% csrf_token %}
+  {{ basket_form.as_p }}
+  <button type="submit" class="btn btn-outline-primary"
+    data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
+</form>
+{% else %}
+<span class="btn btn-default disabled">{% trans "Add to basket" %}</span>
+{% endif %}

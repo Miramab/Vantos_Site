@@ -1,0 +1,2993 @@
+<!DOCTYPE html>
+{% load basket_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load i18n %}
+{% load static %}
+<html class="supports-js supports-no-touch supports-csstransforms supports-csstransforms3d supports-fontface">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
+    <!-- Font ================================================== -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,500,600,700">
+    <!-- Font ================================================== -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,500,600,700">
+    <!-- Helpers ================================================== -->
+    <!-- <meta property="og:type" content="website"> -->
+
+    <!-- <meta property="og:image" content="{% static "oscar/assets/images/giftkaro_logo.png" %}">
+    <meta property="og:image:secure_url" content="{% static "oscar/assets/images/giftkaro_logo.png" %}"> -->
+    <!-- <meta property="og:url" content="#">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:card" content="summary"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% block favicon %}
+    <link rel="shortcut icon" href="{% static "oscar/assets/favicon.ico" %}" />
+    {% endblock %}
+    <!-- CSS ================================================== -->
+    <link href="{% static "oscar/assets/css/jquery.fancybox.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="{% static "oscar/assets/css/font-awesome.min.css" %}">
+    <link href="{% static "oscar/assets/css/animate.min.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static " oscar/assets/css/swatch.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static "oscar/assets/css/owl.carousel.min.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static "oscar/assets/css/flexslider.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static "oscar/assets/css/timber.scss.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static "oscar/assets/css/home_market.global.scss.css" %}" rel="stylesheet" type="text/css"
+        media="all">
+    <link href="{% static "oscar/assets/css/home_market.style.scss.css" %}" rel="stylesheet" type="text/css"
+        media="all">
+    <link href="{% static "oscar/assets/css/tada.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static "oscar/assets/css/spr.css" %}" rel="stylesheet" type="text/css" media="all">
+    <!-- JS ================================================== -->
+    <script src="{% static "oscar/assets/js/jquery.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.fancybox.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/owl.carousel.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.tweet.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.optionSelect.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.flexslider-min.js" %}" type="text/javascript"></script>
+</head>
+
+<style>
+    .aspectRation {
+        display: block;
+        width: 100%;
+        position: relative;
+    }
+
+    .aspectRation img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .aspectRation.hero {
+        padding-top: 26.04%;
+    }
+
+    .aspectRation.shopby {
+        padding-top: 127.51%;
+        background: #f8f8f8;
+    }
+
+    .aspectRation.offers {
+        padding-top: 6.59%;
+        background: #f8f8f8;
+    }
+
+    .aspectRation.bigimg {
+        padding-top: 109.09%;
+        background: #f8f8f8;
+    }
+
+    .aspectRation.smallimg {
+        padding-top: 63.63%;
+        background: #f8f8f8;
+    }
+
+    .aspectRation.fullImg {
+        padding-top: 32%;
+        background: #f8f8f8;
+    }
+
+    .aspectRation.trendingPro {
+        padding-top: 100%;
+        background: #f8f8f8;
+    }
+
+
+
+    .occassions {
+        display: block;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        margin-top: 15px;
+    }
+
+    .occassions ul {
+        display: table;
+        width: 100%;
+    }
+
+    .occassions li {
+        display: table-cell;
+        padding: 10px 5px;
+        list-style: none;
+        min-height: 132px;
+        vertical-align: top;
+        width: 11.11%;
+    }
+
+    .occassions li a {
+        display: block;
+    }
+
+    .occassions li figure img {
+        display: inline-block;
+        transition: all ease-in-out 0.25s;
+        background: #fff;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+    }
+
+    .occassions li figure:hover img,
+    .occassions li figure:hover span.sprite-svg,
+    .category a:hover .abroad-gifts {
+        transform: translate(0px, -3px);
+    }
+
+    .occassions li figcaption {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+        color: #222;
+        line-height: 20px;
+        position: relative;
+        z-index: 9;
+    }
+
+    .sprite-svg {
+        background: #fff url(https://i1.fnp.com/assets/images/custom/new-desk-home/occasions-icons/Icon-Desk-19-nov-2020.png);
+        display: block;
+        margin: 0 auto;
+        background-repeat: no-repeat;
+        background-size: 600%;
+        width: 90px;
+        height: 90px;
+        -webkit-transition: all ease-in-out 0.25s;
+        transition: all ease-in-out 0.25s;
+        background-position-y: 0 !important;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    .sprite-svg.birthday {
+        background-position: -4px 0px !important;
+    }
+
+    .sprite-svg.birthday1 {
+        background-position: -337px -225px !important
+    }
+
+    .sprite-svg.cakes {
+        background-position: -114px 0px !important;
+    }
+
+    .sprite-svg.cakes1 {
+        background-position: -338px -333px !important;
+    }
+
+    .sprite-svg.flowers {
+        background-position: -228px 0px !important
+    }
+
+    .sprite-svg.plants {
+        background-position: -334px 0 !important
+    }
+
+    .sprite-svg.new-arrival {
+        background-position: -448px 0 !important
+    }
+
+    .sprite-svg.new-arrival1 {
+        background-position: -448px -225px !important
+    }
+
+    .sprite-svg.combo {
+        background-position: -4px -114px !important
+    }
+
+    .sprite-svg.personalised_gifts {
+        background-position: -114px -114px !important
+    }
+
+    .sprite-svg.digital_gifts {
+        background-position: -228px -114px !important
+    }
+
+    .sprite-svg.international {
+        background-position: -226px -224px !important
+    }
+
+    .sprite-svg.midnight {
+        background-position: -4px -335px !important
+    }
+
+    .sprite-svg.flowersNew {
+        background-position: -448px -340px !important;
+    }
+
+    .sprite-svg.plantsNew {
+        background-position: -4px -448px !important;
+    }
+
+    .sprite-svg.plantsNew1 {
+        background-position: -444px -448px !important;
+    }
+
+    .sprite-svg.personalised_giftsNew {
+        background-position: -114px -448px !important;
+    }
+
+    .sprite-svg.anniversary {
+        background-position: -3px -223px !important;
+    }
+
+    .sprite-svg.kc {
+        background-position: -226px -448px !important;
+    }
+
+    .sprite-svg.bhai-dooj {
+        background-position: -336px -448px !important;
+    }
+
+
+    .webwrapper {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1600px;
+        padding: 0 35px;
+    }
+
+
+
+    .occassions li figcaption i {
+        vertical-align: middle;
+        font-size: 20px;
+    }
+
+    .occassions li:hover figcaption {
+        color: #008539;
+    }
+
+    .occassions li:hover .countries-popup {
+        display: block;
+    }
+
+
+
+
+
+    .occassions .view-all {
+        top: 10px;
+    }
+
+    a.view-all {
+        font-size: 14px;
+        border-radius: 4px;
+        padding: 10px;
+        text-transform: uppercase;
+        background: #008539;
+        color: #fff;
+        transition: all ease-in-out 0.25s;
+    }
+
+    .dropDown_header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .heading {
+        display: block;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 89px;
+        flex-direction: column;
+    }
+
+    .maintitle {
+        font-size: 26px;
+        text-align: center;
+        margin: 10px 0 0 0;
+        font-weight: 300;
+    }
+
+    span.highlight {
+        color: #222;
+    }
+
+    .mainsubtitle {
+        color: #222;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .categories {
+        display: block;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        margin-bottom: 40px;
+    }
+
+    .categories.recentlyViewed {
+        margin-bottom: 0;
+        display: none;
+    }
+
+    .category-title {
+        width: 100%;
+        text-align: left;
+        padding: 20px;
+        font-weight: 500;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .categories1 {
+        display: flex;
+        width: 100%;
+        text-align: left;
+        padding: 0 10px;
+        flex-wrap: wrap;
+    }
+
+    .categories1 .category {
+        display: block;
+        width: 20%;
+        padding: 0 0px 20px;
+    }
+
+    .categories1 .category a {
+        display: block;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        padding: 2px;
+    }
+
+    .categories1 .category figcaption {
+        padding: 15px;
+    }
+
+    /* .categories1 .category figcaption span.p-name {
+        color: #222;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        font-weight: 500;
+        font-size: 16px;
+        display: block;
+    } */
+
+    .categories1 .category figcaption span.p-name {
+        color: #222;
+        /* white-space: nowrap; */
+        /* overflow: hidden; */
+        /* text-overflow: ellipsis; */
+        font-family: 'Roboto', Arial, sans-serif;
+        -webkit-font-smoothing: subpixel-antialiased;
+        text-align: left;
+        justify-content: left;
+        font-weight: 500;
+        /* font-size: 16px; */
+        /* display: block; */
+    }
+
+    #trending .categories1 .category figcaption span.p-name {
+        font-weight: 400;
+        text-align: left;
+    }
+
+    .slick-list {
+        width: 100%;
+    }
+
+    .categories1 .category figcaption span.h-price {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    .categories1 .category figcaption span.WebRupee {
+        display: inline-block;
+        margin: 0;
+        vertical-align: top;
+    }
+
+    .offer-banners {
+        display: block;
+        width: 100%;
+        position: relative;
+        margin-bottom: 40px;
+        background: #fff;
+        padding: 4px;
+        border-radius: 4px;
+    }
+
+    .new-categories {
+        display: block;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        margin-bottom: 40px;
+        padding: 0;
+    }
+
+    .new-categories h2.category-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 500;
+        padding: 20px;
+        width: 100%;
+        color: #222;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .main-categories {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    .cols6 {
+        max-width: 550px;
+        width: 100%;
+    }
+
+    .cols12 {
+        max-width: 1250px;
+        width: 100%;
+    }
+
+    .new-categories .cols6 .single-category a .categories-descriptions,
+    .new-categories .cols12 .single-category a .categories-descriptions {
+        display: block;
+        padding: 10px 30px 30px;
+    }
+
+    .new-categories .cols6 .single-category a .categories-descriptions h4,
+    .new-categories .cols12 .single-category a .categories-descriptions h4 {
+        margin: 0;
+        font-weight: 500;
+        font-size: 24px;
+    }
+
+    .new-categories .cols6 .single-category a .categories-descriptions p,
+    .new-categories .cols12 .single-category a .categories-descriptions p {
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 7px;
+    }
+
+    .abroad-gifts {
+        display: inline-block;
+        width: 90px;
+        height: 90px;
+        background-size: 1000%;
+        transition: all ease-in-out 0.25s;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        background-color: #f6f6f6;
+    }
+
+    .abroad-gifts.aust {
+        background-position: -183px -1px;
+    }
+
+    .abroad-gifts.uk {
+        background-position: -94px -1px;
+    }
+
+    .abroad-gifts.usa {
+        background-position: -4px -1px;
+    }
+
+    .abroad-gifts.can {
+        background-position: -273px -1px;
+    }
+
+    .abroad-gifts.uae {
+        background-position: -361px -1px;
+    }
+
+    .abroad-gifts.all {
+        background-position: -362px -926px;
+    }
+
+    .categories.international .categories1 .category {
+        width: 16.6%;
+        text-align: center;
+    }
+
+    .categories.international .categories1 .category a {
+        box-shadow: none;
+    }
+
+    .categories.international .categories1 .category a figcaption {
+        font-size: 18px;
+        color: #222;
+    }
+
+    article {
+        display: block;
+        width: 100%;
+        padding: 35px 0 !important;
+    }
+
+    article h2 {
+        color: #222;
+        margin: 0 0 10px !important;
+        font-weight: 500 !important;
+    }
+
+    article p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    article a {
+        color: #45A4EC;
+    }
+
+    .blogs {
+        display: flex;
+        width: 100%;
+        margin: 0;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .blogs li {
+        width: 31%;
+        list-style: none;
+    }
+
+    .back-to-top {
+        position: fixed;
+        right: -110%;
+        bottom: 10%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        line-height: 53px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        cursor: pointer;
+        transition: all ease-in-out 0.5s;
+    }
+
+    .back-to-top.top {
+        right: 20px;
+    }
+
+    .back-to-top a:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    #more-gifts,
+    #trending .categories1 {
+        margin-bottom: 0;
+    }
+
+    #more-gifts .slick-prev,
+    #trending .slick-prev,
+    .recentlyViewedprods .slick-prev {
+        left: 0px;
+        border-radius: 0 4px 4px 0;
+    }
+
+    #more-gifts .slick-next,
+    #trending .slick-next,
+    .recentlyViewedprods .slick-next {
+        right: 0px;
+        border-radius: 4px 0 0 4px;
+    }
+
+    #more-gifts .slick-arrow,
+    #trending .slick-arrow,
+    .recentlyViewedprods .slick-arrow {
+        z-index: 99;
+        background: rgba(255, 255, 255, 0.5);
+        height: 70px;
+        color: #222;
+        width: 30px;
+        margin-top: -20px;
+        top: 40%;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    #more-gifts .slick-arrow:hover,
+    #trending .slick-arrow:hover,
+    .recentlyViewedprods .slick-arrow:hover {
+        background: rgba(255, 255, 255, 1)
+    }
+
+    #more-gifts .slick-arrow.slick-disabled,
+    #trending .slick-arrow.slick-disabled,
+    .recentlyViewedprods .slick-arrow.slick-disabled {
+        opacity: 0;
+    }
+
+    .recentlyViewedprods {
+        margin-bottom: 0;
+        display: block;
+        width: 100%;
+        padding: 0 10px 20px;
+    }
+
+    .recentlyViewedPro {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        margin: 0 10px 10px;
+    }
+
+    .recentlyViewedPro figcaption {
+        display: block;
+        padding: 10px;
+        font-weight: 500;
+        color: #222;
+        font-size: 18px;
+    }
+
+    .new-categories .cols6 .single-category a:hover .categories-img img,
+    .categories1 .category a:hover img,
+    .new-categories .cols12 .single-category a:hover .categories-img {
+        transform: scale(1.03);
+    }
+
+    .new-categories .cols6 .single-category a .categories-img img,
+    .categories1 .category img,
+    .new-categories .cols12 .single-category a .categories-img {
+        transition: all ease-in-out 0.25s;
+    }
+
+    .new-categories .cols6 .single-category a .categories-img,
+    .new-categories .cols12 .single-category a .categories-img,
+    .thum {
+        overflow: hidden;
+    }
+
+    @media screen and (max-width: 998px) {
+        .categories {
+            visibility: hidden;
+            clear: both;
+            display: none;
+        }
+    }
+
+    .grid__item .grid__item_wrapper .action-button .add-to-cart-form .btn {
+        width: 100%;
+        padding: 0 15px;
+        text-align: left;
+        border: 1px solid red;
+    }
+
+    .grid__item .grid__item_wrapper .action-button li .btn {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        text-align: center;
+        line-height: 28px;
+        background: #fff;
+        border: 1px solid #ccc;
+        color: red;
+        font-size: 11px;
+        transition: all 0.5s ease 0s;
+        -webkit-transition: all 0.5s ease 0s;
+    }
+</style>
+
+<style>
+    /* Mobile View */
+    .banner-3-sec {
+        width: 100%;
+        padding: 0 5px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+
+    .aspect_ration.diwali {
+        width: 58px;
+        height: 58px;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+    }
+
+    .products-sec .product:last-child {
+        float: none !important;
+    }
+
+    .progressive {
+        filter: blur(5px);
+        transition: blur 200ms ease-in;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-size: 100% 100%;
+        transition: opacity 200ms ease-in
+    }
+
+    .slick-track:after,
+    .slick-track:before {
+        display: none;
+    }
+
+    /*aspect-ratio*/
+    .aspect_ration {
+        display: block;
+        position: relative;
+        width: 100%;
+    }
+
+    .aspect_ration img {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 100%;
+        object-fit: fill;
+        transition: all ease-in-out 0.25s;
+        border-radius: 4px;
+    }
+
+    .aspect_ration.hero-banner {
+        padding-top: 33.33%;
+        height: auto !important;
+        background: url(https://m-i1.fnp.com/assets/images/custom/new-mobile-home/top-banners/small/Anniversary-1-dec-2020.jpg) no-repeat;
+        background-size: cover;
+    }
+
+    .aspect_ration.cat-1-3-banner {
+        padding-top: 100%
+    }
+
+    .aspect_ration.mid-size-banner {
+        padding-top: 72.72%
+    }
+
+    .aspect_ration.offer-size-banner {
+        padding-top: 14.88%
+    }
+
+    .aspect_ration.cat-big-banner {
+        padding-top: 41.32%
+    }
+
+    .aspect_ration.cat-1-dinning-banner {
+        padding-top: 55.83%
+    }
+
+    /*aspect-ratio*/
+    .one-third:nth-child(1) a,
+    .one-third:nth-child(8) a {
+        background: #e9f9e2
+    }
+
+    .one-third:nth-child(2) a,
+    .one-third:nth-child(9) a {
+        background: #fff1d3
+    }
+
+    .one-third:nth-child(4) a {
+        background: #fff8f3
+    }
+
+    .one-third:nth-child(6) a {
+        background: #f3ffef
+    }
+
+    .sprite-svg.gift-cards {
+        background-color: rgba(255, 255, 255, 0.5)
+    }
+
+    .sprite-svg {
+        background: url(https://m-i1.fnp.com/assets/images/custom/new-mobile-home/top-icons/occassion-icons10.png);
+        background-repeat: no-repeat;
+        background-size: 600%;
+        width: 58px !important;
+        height: 58px !important;
+        display: inline-block;
+        border-radius: 50%;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        position: relative
+    }
+
+    .sprite-svg.birthday {
+        background-position: 0px 0px;
+    }
+
+    .sprite-svg.birthday1 {
+        background-position: -217px -144px;
+    }
+
+    .sprite-svg.cake {
+        background-position: -75px 0px
+    }
+
+    .sprite-svg.cake1 {
+        background-position: -217px -215px
+    }
+
+    .sprite-svg.flowers {
+        background-position: -145px 0px
+    }
+
+    .sprite-svg.plants {
+        background-position: -215px 0px
+    }
+
+    .sprite-svg.personalised {
+        background-position: -75px -75px
+    }
+
+    .sprite-svg.combosicon {
+        background-position: 0px -75px
+    }
+
+    .sprite-svg.chocolates {
+        background-position: -217px -75px
+    }
+
+    .sprite-svg.new-arrival {
+        background-position: -290px 0px
+    }
+
+    .sprite-svg.new-arrival1 {
+        background-position: -287px -144px
+    }
+
+    .sprite-svg.international {
+        background-position: -145px -145px
+    }
+
+    .sprite-svg.soft-toys {
+        background-position: -288px -73px
+    }
+
+    .sprite-svg.anniversary {
+        background-position: 0px -145px
+    }
+
+    .sprite-svg.balloons {
+        background-position: -145px -210px
+    }
+
+    .sprite-svg.experiences {
+        background-position: -75px -215px
+    }
+
+    .sprite-svg.flowersNew {
+        background-position: -288px -218px;
+    }
+
+    .sprite-svg.plantsNew {
+        background-position: -2px -290px;
+    }
+
+    .sprite-svg.personalisedNew {
+        background-position: -73px -290px;
+    }
+
+    .sprite-svg.kc {
+        background-position: -145px -290px;
+    }
+
+    .sprite-svg.bhai-dooj {
+        background-position: -215px -290px;
+    }
+
+    .sprite-svg.books {
+        background-position: -288px -288px;
+    }
+
+    .no-bg {
+        background: none !important
+    }
+
+    .occassions {
+        background: none
+    }
+
+    .occassions ul {
+        display: flex;
+    }
+
+    .occassions li {
+        width: auto;
+        margin: 0;
+        vertical-align: top;
+        padding: 10px;
+        flex: none;
+    }
+
+    .occassions li img {
+        display: block
+    }
+
+    .occassions .column-block figure {
+        FLOAT: left;
+        width: 100%
+    }
+
+    .occassions li a {
+        width: 100%;
+        padding: 0 !important;
+    }
+
+    .occassions li figcaption {
+        font-size: 14px;
+        padding: 10px 0;
+        line-height: 1
+    }
+
+    .home-category-header {
+        float: left;
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box
+    }
+
+    .main-slider .slick-dots {
+        position: absolute;
+        width: 100%;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+        bottom: 0;
+        line-height: 1;
+        margin: 0
+    }
+
+    .mobile-top-banner {
+        float: left;
+        width: 100%;
+        margin-bottom: 10px;
+        background: #fff8f3;
+        overflow: hidden
+    }
+
+    .mobile-top-banner.slick-initialized {
+        overflow: inherit
+    }
+
+    #mainbanner,
+    .usps .usps-slider .usps-slide a:not(:first-child),
+    .premium-flowers .products-sec .premium-side a:not(:first-child),
+    .main-slider a {
+        display: none
+    }
+
+    .main-slider.slick-initialized .slick-slide,
+    .usps .usps-slider.slick-initialized .usps-slide,
+    .premium-flowers .products-sec.slick-initialized .premium-side,
+    .mobikwik.slick-initialized a.slick-slide,
+    .other-services-slider.slick-initialized .slick-slide,
+    .main-slider a:first-child {
+        display: block
+    }
+
+    .slick-list {
+        width: 100%;
+        padding: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        border-radius: 4px
+    }
+
+    .slick-dots {
+        width: 100%;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+        line-height: 1;
+        position: absolute;
+        left: 0;
+        bottom: 5%
+    }
+
+    .slick-dots li {
+        position: relative;
+        display: inline-block;
+        margin: 0 1px;
+        padding: 0;
+        cursor: pointer;
+        line-height: 1;
+        vertical-align: top
+    }
+
+    .slick-dots li span {
+        border: 0;
+        width: 5px;
+        height: 5px;
+        background: #222;
+        opacity: 0.3;
+        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+        font-size: 0.1px !important;
+        color: transparent;
+        line-height: 1;
+        float: left
+    }
+
+    .slick-dots li.slick-active span {
+        opacity: 0.75
+    }
+
+    .slick-slide:hover,
+    .slick-slide.active,
+    .slick-slide:hover {
+        background: none !important
+    }
+
+    .banner-3-sec {
+        width: 100%;
+        padding: 0 5px;
+        display: flex;
+        flex-wrap: wrap
+    }
+
+    .banner-3-sec .one-third {
+        width: 33.3%;
+        padding: 0 5px;
+        margin-bottom: 10px
+    }
+
+    .banner-3-sec .one-third a {
+        overflow: hidden;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        display: block;
+        color: #222
+    }
+
+    .banner-3-sec .one-third .banner-name {
+        background: #fff;
+        font-size: 12px;
+        padding: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        width: 100%;
+        min-height: 28px;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.5
+    }
+
+    .cs-listing {
+        display: flex;
+        width: 100%;
+    }
+
+    .cs-listing ul {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .cs-listing ul::after,
+    .cs-listing ul::before {
+        display: none;
+    }
+
+    .cs-listing ul li a figure img {
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+    }
+
+    .cs-listing ul li {
+        width: 48% !important;
+        margin-bottom: 10px;
+        padding: 0;
+        float: none;
+    }
+
+    .mobikwik {
+        display: flex;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .home-page-heading {
+        display: flex;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .home-page-heading h1 {
+        color: #222;
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+        padding: 12px 0
+    }
+
+    .home-products {
+        display: flex;
+        width: 100%;
+        margin-bottom: 15px;
+        background: #fff;
+        box-shadow: none;
+        flex-direction: column;
+    }
+
+    .category-header {
+        float: none;
+        display: flex;
+        width: 100%;
+        padding: 10px 15px;
+        background: none;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+
+    .category-header .category-title {
+        float: none;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .products-sec {
+        display: flex;
+        width: 100%;
+        padding: 0 15px 15px;
+        overflow-x: auto;
+        flex-wrap: wrap;
+        flex-flow: row
+    }
+
+    .product {
+        border: 0;
+        width: 90%;
+        border-radius: 4px;
+        overflow: hidden;
+        padding-right: 20px;
+        flex: none;
+    }
+
+    .product a {
+        display: block;
+    }
+
+    .priceNreviews {
+        display: flex;
+        width: 100%;
+    }
+
+    .product .pro-details {
+        float: none;
+        display: flex;
+        padding: 3% 0;
+        text-align: left;
+        flex-direction: column;
+    }
+
+    .nameprice {
+        display: flex;
+        width: 100%;
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .proreviews {
+        display: block;
+        flex: 1;
+    }
+
+    .percentoff {
+        float: none;
+        color: #555;
+        font-weight: 500;
+        margin-top: 5px;
+        line-height: 1;
+        display: block;
+        text-align: right;
+        flex: 1;
+    }
+
+    .pro-name {
+        font-size: 14px;
+        color: #222;
+        flex: 2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        font-weight: 500;
+    }
+
+    .h-price-new {
+        flex: 1;
+        font-size: 20px;
+        font-weight: 500;
+        color: #e53333;
+        min-width: 70px;
+        text-align: right;
+    }
+
+    .reviewratings {
+        display: inline-block;
+        padding: 5px 2px;
+        border-radius: 4px;
+        background: #009d43;
+        color: #fff;
+        line-height: 1;
+    }
+
+    .total.reviews {
+        font-size: 14px;
+    }
+
+    .pro-details .old-price {
+        text-decoration: line-through;
+        font-family: Roboto;
+        font-size: 14px;
+    }
+
+    .reviewratings i {
+        vertical-align: top;
+        margin-left: 3px;
+        font-size: 18px;
+        margin-top: -2px;
+    }
+
+    #cutoffTime {
+        float: none;
+        width: 100%;
+        padding: 0 15px;
+        background: none;
+        display: block;
+    }
+
+    #cutoffTime a {
+        display: block;
+        background: #fff;
+        border-radius: 4px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #cutoffTime a .today-delivery-msg {
+        display: block;
+        font-size: 14px;
+        color: #222;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    #cutoffTime a .timer-sec {
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+
+    #cutoffTime a .timer-sec .timer {
+        display: inline-block;
+        text-align: left;
+        float: left;
+        font-size: 24px;
+        color: #e53333;
+        font-weight: 500;
+        line-height: 1;
+        margin-top: 5px
+    }
+
+    #cutoffTime a .timer-sec .timer span {
+        color: #666;
+        font-size: 12px;
+        vertical-align: bottom;
+        margin-bottom: 3px;
+        display: inline-block
+    }
+
+    #cutoffTime a .explore-now {
+        display: inline-block;
+        background: #ff9212;
+        color: #fff;
+        text-transform: uppercase;
+        border-radius: 4px;
+        font-size: 14px;
+        padding: 5px 5px 5px 10px
+    }
+
+    #cutoffTime a .explore-now i {
+        vertical-align: middle;
+        margin-left: -6px
+    }
+
+    .view-all {
+        color: #fff;
+        background-color: #009d43;
+        padding: 3.5px 10px;
+        font-size: 13px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        float: none;
+    }
+
+    .product.full-width {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .product.small-sec {
+        width: 33.3%;
+        margin: 0;
+        text-align: center;
+        margin-top: 15px;
+        padding: 0 5px
+    }
+
+    .products-sec.category-sec {
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .products-sec.category-sec .product {
+        flex: inherit
+    }
+
+    .product.small-sec {
+        width: 32%;
+        margin: 0;
+        text-align: center;
+        margin-top: 15px;
+        padding: 0;
+    }
+
+    .product.small-sec figcaption {
+        color: #222;
+        padding: 5px;
+        font-weight: 500;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .usps {
+        display: block;
+        width: 100%;
+        padding: 0 15px 15px
+    }
+
+    .usps .usps-slider {
+        display: block;
+        width: 100%;
+        background: #fff;
+        padding: 10px;
+        border-radius: 4px
+    }
+
+    .usps .usps-slider .usps-slide {
+        text-align: center;
+        font-size: 16px;
+        color: #666;
+        padding: 5px 0 !important
+    }
+
+    .usps .usps-slider .usps-slide span {
+        width: 30px;
+        height: 30px;
+        background: #666;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        display: inline-block;
+        line-height: 28px;
+        margin-right: 8px
+    }
+
+    .usps .usps-slider .usps-slide span i {
+        font-size: 16px;
+        vertical-align: middle
+    }
+
+    .cakessection .product-details {
+        width: 80%;
+        margin-right: 15px;
+        flex: none;
+    }
+
+    .cakessection .product-details figure {
+        text-align: center;
+    }
+
+    .cakessection .product-details figure .figcaptions {
+        margin-top: -20%;
+        width: 80%;
+        background: #fff;
+        display: inline-block;
+        border-radius: 4px;
+        padding: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .cakessection .product-details figure .figcaptions .product-name {
+        color: #e96987;
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+
+    .cakessection .product-details figure .figcaptions .product-tagline {
+        color: #666;
+        display: flex;
+        font-weight: 400;
+        font-size: 16px;
+        text-align: center;
+        line-height: 1.3;
+        white-space: normal;
+        height: 46px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cakessection .product-details figure .figcaptions .explore-now {
+        display: block;
+        text-align: center;
+        color: #ff9212;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1;
+        margin-top: 5px;
+        text-transform: uppercase;
+    }
+
+    .other-services-slider {
+        margin-top: -50px;
+    }
+
+    .other-services-slider a.slick-slide {
+        padding: 0 10px !important;
+        background: none;
+        margin-bottom: 10px;
+    }
+
+    .other-services-slide {
+        padding: 10px;
+        border-radius: 4px;
+        text-align: center;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        min-height: 125px;
+    }
+
+    .other-services-slide .services-name {
+        font-size: 18px;
+        font-weight: 500;
+        color: #222;
+        display: block;
+    }
+
+    .other-services-slide .services-tagline {
+        font-size: 16px;
+        color: #666;
+        display: block;
+    }
+
+    .other-services-slide .gift-now {
+        background: #ff9212;
+        color: #fff;
+        text-transform: uppercase;
+        display: inline-block;
+        font-size: 16px;
+        padding: 5px 10px;
+        min-width: 140px;
+        border-radius: 4px;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    .bestsellers-category .products-sec ul,
+    .more-gifts .products-sec ul {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .bestsellers-category .products-sec ul li,
+    .more-gifts .products-sec ul li {
+        width: 31%;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .bestsellers-category .products-sec li figcaption,
+    .more-gifts .products-sec li figcaption {
+        text-transform: uppercase;
+        font-size: 14px;
+        color: #666;
+        padding: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .bestsellers-category.international li {
+        float: none;
+        display: inline-block;
+        text-align: center;
+        margin: 0;
+        width: auto;
+    }
+
+    .bestsellers-category.international li span.country-flag {
+        width: 90px;
+        height: 90px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        background: url(https://m-i7.fnp.com/assets/images/custom/new-mobile-home/international-icons.png) no-repeat;
+        background-size: 800%;
+        background-position: -5px -5px
+    }
+
+    .bestsellers-category.international li span.country-name {
+        display: block;
+        text-align: center;
+        color: #666
+    }
+
+    .bestsellers-category.international li span.country-flag.usa {
+        background-position: -5px -5px
+    }
+
+    .bestsellers-category.international li span.country-flag.canada {
+        background-position: -300px -5px
+    }
+
+    .bestsellers-category.international li span.country-flag.uae {
+        background-position: -400px -5px
+    }
+
+    .bestsellers-category.international li span.country-flag.aust {
+        background-position: -205px -5px
+    }
+
+    .bestsellers-category.international li span.country-flag.uk {
+        background-position: -105px -5px
+    }
+
+    .bestsellers-category.international li span.country-flag.singapore {
+        background-position: -500px -5px
+    }
+
+    .bestsellers-category.international li span.country-flag.world {
+        background-position: -600px -5px
+    }
+
+    .home-products.international ul {
+        flex-flow: row;
+        overflow-x: auto;
+    }
+
+    .home-products.international .products-sec {
+        padding-bottom: 0;
+    }
+
+    .home-products.international li {
+        flex: none;
+    }
+
+    .international-rakhi-icons {
+        position: fixed;
+        top: 20px;
+        max-width: 1020px;
+        left: 15px;
+        right: 15px;
+        background: #fff;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        z-index: 99999;
+        display: none
+    }
+
+    .international-rakhi-icons h3 {
+        font-weight: 500;
+        margin-bottom: 15px;
+        font-size: 22px
+    }
+
+    .international-rakhi-icons ul {
+        margin: 0;
+        width: 100%;
+        float: left
+    }
+
+    .international-rakhi-icons li {
+        width: 32%;
+        margin-bottom: 10px;
+        display: inline-block;
+        vertical-align: top
+    }
+
+    .international-rakhi-icons li a {
+        color: #222;
+        font-size: 16px
+    }
+
+    .count-name {
+        display: block;
+        padding: 0 5px 5px
+    }
+
+    .view-all-cont {
+        display: inline-block;
+        text-transform: uppercase;
+        color: #fff;
+        background: #009d43;
+        padding: 10px 20px;
+        border-radius: 4px;
+        margin-top: 10px;
+        font-weight: 500;
+        margin-bottom: 10px
+    }
+
+    .international-rakhi-icons li a span.count-icon {
+        width: 58px;
+        height: 58px;
+        background: url(https://m-i7.fnp.com/assets/images/custom/new-international/Flags-min3.png) no-repeat;
+        background-size: 1000%;
+        border-radius: 50%;
+        display: inline-block
+    }
+
+    .international-rakhi-icons li a span.count-icon.india {
+        background-position: -3px -418px
+    }
+
+    .international-rakhi-icons li a span.count-icon.usa {
+        background-position: -3px 0
+    }
+
+    .international-rakhi-icons li a span.count-icon.uk {
+        background-position: -60px -1px
+    }
+
+    .international-rakhi-icons li a span.count-icon.uae {
+        background-position: -233px -1px
+    }
+
+    .international-rakhi-icons li a span.count-icon.aust {
+        background-position: -118px -1px
+    }
+
+    .international-rakhi-icons li a span.count-icon.canada {
+        background-position: -176px -1px
+    }
+
+    .international-rakhi-icons li a span.count-icon.singa {
+        background-position: -348px -297px
+    }
+
+    .international-rakhi-icons li a span.count-icon.phili {
+        background-position: -522px -238px
+    }
+
+    .international-rakhi-icons li a span.count-icon.germ {
+        background-position: -3px -120px
+    }
+
+    .international-rakhi-icons li a span.count-icon.nz {
+        background-position: -291px -239px
+    }
+
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .mob-transbg {
+        position: fixed;
+        top: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: none;
+    }
+
+    .premium-flowers {
+        background: #fdf2f2;
+    }
+
+    .premium-flowers .category-title {
+        flex: 1;
+        text-align: center;
+    }
+
+    .more-info-header {
+        float: left;
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 500;
+        font-size: 14px;
+        position: relative;
+        background: #fff;
+    }
+
+    .more-info-header span {
+        position: absolute;
+        width: 12px;
+        height: 2px;
+        background: #222;
+        right: 15px;
+        top: 45%;
+    }
+
+    .more-info-header span:after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 2px;
+        background: #222;
+        left: 0;
+        transform: rotate(90deg);
+        transition: all ease-in-out 0.25s;
+    }
+
+    .more-content {
+        float: left;
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+        border-top: 1px solid #d5d5d5;
+        color: #222;
+        display: none;
+        background: #fff;
+    }
+
+    .more-content a {
+        color: #2179d0;
+    }
+
+    .more-content h2 {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .more-content p {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .more-info-header.active span:after {
+        transform: rotate(0deg);
+    }
+
+    @media screen and (min-width: 999px) {
+        .banner-3-sec {
+            visibility: hidden;
+            clear: both;
+            display: none;
+        }
+    }
+</style>
+
+<body id="home-market-responsive-shopify-theme" class="index1 template-index">
+    {% include "oscar/partials/navbar.html" %}
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="wrapper">
+            <div id="top-home-blocks" class="grid--full grid--table">
+                <div class="grid__item one-quarter shop-by-collections medium-down--hide">
+                    <div class="sidebar-collections">
+                        <div class="sdcollections-title sb-title">
+                            <i class="fa fa-list"></i>
+                            <span>All Collections</span>
+                        </div>
+                        <div class="sdcollections-content">
+                            <ul class="sdcollections-list">
+                                <li class="sdc-element vetical-menu1 site-nav--has-dropdown" aria-haspopup="true">
+                                    <a href="{{ homepage_url }}" class="site-nav__link">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/pic3.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Men's Footwear
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="icon icon-arrow-right" aria-hidden="true"></span>
+                                    </a>
+                                    <!-- <ul class="site-nav__dropdown vetical__dropdown vetical__dropdown1">
+                                        <li class="nav-links nav-links01 grid__item large--one-half">
+                                            <ul>
+                                                <li class="list-title">Usefull links</li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="https://giftkaro.in/catalogue/category/cakes_1/">Cakes</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/flowers_2/">Flowers</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/personalized-gifts_6/">Personalized
+                                                        Gifts
+                                                    </a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="https://giftkaro.in/catalogue/category/chocolates_34/">Handmade
+                                                        Chocolate</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/jewellery_12/">Accessories</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/combo-offer_15/">Combo</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Tablet</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Smartwatches</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="grid__item large--one-half">
+                                            <ul>
+                                                <li class="list-title">New Arrivals</li>
+                                                <li class="list-product">
+                                                    <div class="list-product-image">
+                                                        <a href="{{ homepage_url }}"><img
+                                                                src="static/oscar/assets/images/18.jpg"
+                                                                alt="Example Book"></a>
+                                                    </div>
+                                                    <div class="list-product-name">
+                                                        Example Book
+                                                    </div>
+                                                    <div class="list-product-link">
+                                                        <a href="./product.html">More Detail</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul> -->
+                                </li>
+                                <li class="sdc-element vetical-menu2 site-nav--has-dropdown" aria-haspopup="true">
+                                    <a href="{{ homepage_url }}" class="site-nav__link">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/pic4.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Slipper
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="icon icon-arrow-right" aria-hidden="true"></span>
+                                    </a>
+                                    <!-- <ul class="site-nav__dropdown vetical__dropdown vetical__dropdown1">
+                                        <li class="nav-links nav-links01 grid__item large--one-half">
+                                            <ul>
+                                                <li class="list-title">Usefull links</li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Makeup</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Body Care</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Skin Care</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Perfumes</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Product sets</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Functional products</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Salon Equipment</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="grid__item large--one-half">
+                                            <ul>
+                                                <li class="list-title">New Arrivals</li>
+                                                <li class="list-product">
+                                                    <div class="list-product-image">
+                                                        <a href="./product.html"><img
+                                                                src="static/oscar/assets/images/20.jpg"
+                                                                alt="Demo Product Sample"></a>
+                                                    </div>
+                                                    <div class="list-product-name">
+                                                        Demo Product Sample
+                                                    </div>
+                                                    <div class="list-product-link">
+                                                        <a href="./product.html">More Detail</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul> -->
+                                </li>
+                                <li class="sdc-element">
+                                    <a href="{{ homepage_url }}">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/pic1.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Leather Collection
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="sdc-element">
+                                    <a href="{{ homepage_url }}">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/pic7.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Boots
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- <li class="sdc-element vetical-menu3 site-nav--has-dropdown" aria-haspopup="true">
+                                    <a href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts_6/"
+                                        class="site-nav__link">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/personalized_gifts.jpg"
+                                                    alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Personalized Gifts
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="icon icon-arrow-right" aria-hidden="true"></span>
+                                    </a>
+                                    <ul class="site-nav__dropdown vetical__dropdown vetical__dropdown1">
+                                        <li class="nav-links nav-links01 grid__item large--one-half">
+                                            <ul>
+                                                <li class="list-title">Usefull links</li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts/personalized-mugs_7/">Personalized
+                                                        Mugs</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts/personalized-photo-frame_10/">Personalized
+                                                        Photo Frame</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts/personalized-clocks_8/">Personalized
+                                                        Clocks</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts/personalized-key-chains_11/">Personalized
+                                                        Key Chains</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a
+                                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts/jewellery_12/">Personalized
+                                                        jewellery</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Tablet</a>
+                                                </li>
+                                                <li class="list-unstyled nav-sub-mega">
+                                                    <a href="./collection.html">Smartwatches</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="grid__item large--one-half">
+                                            <ul>
+                                                <li class="list-title">New Arrivals</li>
+                                                <li class="list-product">
+                                                    <div class="list-product-image">
+                                                        <a href="{{ homepage_url }}"><img
+                                                                src="static/oscar/assets/images/24.jpg"
+                                                                alt="Etiam dan lorem quis"></a>
+                                                    </div>
+                                                    <div class="list-product-name">
+                                                        Etiam dan lorem quis
+                                                    </div>
+                                                    <div class="list-product-link">
+                                                        <a href="./product.html">More Detail</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li> -->
+                                <li class="sdc-element">
+                                    <a href="https://giftkaro.in/catalogue/category/cakes_1/">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/pic9.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    All Collection
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="sdc-element">
+                                    <a href="https://giftkaro.in/catalogue/category/flowers_2/">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/offers.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Offers
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- <li class="sdc-element">
+                                    <a href="https://giftkaro.in/catalogue/category/dry-fruits_16/">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/17.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Dry Fruits
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="sdc-element">
+                                    <a href="https://giftkaro.in/catalogue/category/others_57/">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/19.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Others
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="sdc-element">
+                                    <a href="https://giftkaro.in/catalogue/category/combo-offer_15/">
+                                        <div class="element-main">
+                                            <div class="collection-icon">
+                                                <img src="static/oscar/assets/images/combos.jpg" alt="collection icon">
+                                            </div>
+                                            <div class="collection-area have-icons">
+                                                <div class="collection-name">
+                                                    Combo Offers
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% include "oscar/partials/alert_messages.html" %}
+                <div class="grid__item small--one-whole medium--one-whole three-quarters main-slideshow">
+                    <div class="main_slideshow_wrapper">
+                        <div id="slider" class="flexslider">
+                            <ul class="slides">
+                                <!-- <li>
+                                    <img src="static/oscar/assets/images/7.jpg" alt="" />
+                                </li> -->
+                                <li>
+                                    <img src="static/oscar/assets/images/the_promise.jpeg" alt="" />
+                                </li>
+                                <li>
+                                    <img src="static/oscar/assets/images/perfect.jpeg" alt="" />
+                                </li>
+                                <!-- <li>
+                                    <img src="static/oscar/assets/images/cake_banner.jpeg" alt="" />
+                                </li>
+                                <li>
+                                    <img src="static/oscar/assets/images/flower_banner.jpeg" alt="" />
+                                </li>
+
+                                <li>
+                                    <img src="static/oscar/assets/images/flower_banner2.jpeg" alt="" />
+                                </li>
+                                <li>
+                                    <img src="static/oscar/assets/images/flower_banner1.jpeg" alt="" />
+                                </li> -->
+
+
+                            </ul>
+                        </div>
+                        <!-- <div id="carousel" class="flexslider">
+                            <ul class="slides">
+                                <li>
+                                    <div>
+                                        <img src="static/oscar/assets/images/1.jpg" alt="">
+                                        <span class="cr-title"><a href="{{ homepage_url }}"
+                                                onclick="location.href = '{{ homepage_url }}'">Opening celebration
+                                            </a></span>
+                                        <span class="cr-desc">Sale up to 70% from Nov 1, 2020 to Nov 20, 2020</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="static/oscar/assets/images/4.jpg" alt="">
+                                        <span class="cr-title"><a href="{{ homepage_url }}"
+                                                onclick="location.href = '{{ homepage_url }}'">Personalized, Cakes &amp;
+                                                Flowers</a></span>
+                                        <span class="cr-desc">high-end products personalized, cakes &amp; flowers
+                                        </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="static/oscar/assets/images/8.jpg" alt="">
+                                        <span class="cr-title"><a href="{{ homepage_url }}"
+                                                onclick="location.href = '{{ homepage_url }}'">All Gifts
+                                            </a></span>
+                                        <span class="cr-desc">buy now only today sale 20% for all Gifts</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="static/oscar/assets/images/10.jpg" alt="">
+                                        <span class="cr-title"><a href="{{ homepage_url }}"
+                                                onclick="location.href = '{{ homepage_url }}'">New collection</a></span>
+                                        <span class="cr-desc">best seller 2020</span>
+                                    </div>
+                                </li>
+
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="banner-3-sec cdp" data-wdgtinfo="banners~platinum~4">
+                <div class="one-third">
+                    <a href="{{ homepage_url }}" data-wdgt="~~1~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/cr7.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/cr7.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/cr7.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Slipper</span>
+                    </a>
+                </div>
+                <div class="one-third">
+                    <a href="https://giftkaro.in/catalogue/category/flowers_2/" data-wdgt="~~2~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/leather.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/leather.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/leather.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Leather</span>
+                    </a>
+                </div>
+                <div class="one-third">
+                    <a href="https://giftkaro.in/catalogue/category/cakes_1/" data-wdgt="~~3~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/boot.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/boot.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/boot.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Boots</span>
+                    </a>
+                </div>
+                <div class="one-third">
+                    <a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/" data-wdgt="~~4~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/sports.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/sports.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/sports.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Sports</span>
+                    </a>
+                </div>
+                <div class="one-third">
+                    <a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/" data-wdgt="~~5~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/loafer.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/loafer.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/loafer.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">All Shoes</span>
+                    </a>
+                </div>
+                <!-- <div class="one-third">
+                    <a href="https://giftkaro.in/catalogue/category/combo-offer_15/" data-wdgt="~~6~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/combos.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/combos.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/combos.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Combos</span>
+                    </a>
+                </div> -->
+                <!-- <div class="one-third">
+                    <a href="https://giftkaro.in/catalogue/category/chocolates_34/" data-wdgt="~~7~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/chocolate.jpeg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/chocolate.jpeg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/chocolate.jpeg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Chocolate</span>
+                    </a>
+                </div> -->
+                <!-- <div class="one-third">
+                    <a href="{{ homepage_url }}" data-wdgt="~~8~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/cr7.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/cr7.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/anniversary.jpeg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Slipper</span>
+                    </a>
+                </div> -->
+                <div class="one-third">
+                    <a href="{% url 'offer:list' %}" data-wdgt="~~9~~">
+                        <span class="aspect_ration cat-1-3-banner progressive"
+                            style="background-image: url(&quot;static/oscar/assets/images/offers.jpg&quot;); filter: blur(0px);"
+                            data-img-src="static/oscar/assets/images/offers.jpg">
+                            <div class="overlay"
+                                style="background-image: url(&quot;static/oscar/assets/images/offers.jpg&quot;); opacity: 1;">
+                            </div>
+                        </span>
+                        <span class="banner-name">Offers</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="categories bestseller cdp" data-wdgtinfo="product~shop By Bestseller Categories~3~">
+                <div class="category-title">Shop By Bestseller Categories
+                    <a href="{{ homepage_url }}" class="view-all">View All</a>
+                </div>
+                <div class="categories1">
+                    <div class="category">
+                        <a href="{{ homepage_url }}" data-wdgt="~~5~Anniversary~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/cr7.jpg" alt="Anniversary" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Slipper</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="category">
+                        <a href="{{ homepage_url }}" data-wdgt="~~4~Birthday~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/leather.jpg" alt="Birthday" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Leather</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="category">
+                        <a href="https://giftkaro.in/catalogue/category/flowers_2/" data-wdgt="~~9~Flowers~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/boot.jpg" alt="Flowers online" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Boot</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    <!-- <div class="category">
+                        <a href="https://giftkaro.in/catalogue/category/cakes_1/" data-wdgt="~~7~Eggless Cakes~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/cake.jpeg" alt="Eggless Cakes" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Cakes</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div> -->
+                    <div class="category">
+                        <a href="{{ homepage_url }}" data-wdgt="~~3~International~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/loafer.jpg" alt="International Gifts" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">All Shoes</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    <!-- <div class="category">
+                        <a href="https://giftkaro.in/catalogue/category/others_57/" data-wdgt="~~8~Plants~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/all gift.jpeg"
+                                        alt="Plants Bestseller Gifts Online" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Others</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div> -->
+                    <!-- <div class="category">
+                        <a href="https://giftkaro.in/catalogue/category/chocolates_34/" data-wdgt="~~8~Chocolates~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/chocolate.jpeg" alt="Chocolates Gifts Online"
+                                        style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Chocolates</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div> -->
+                    <!-- <div class="category">
+                        <a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/"
+                            data-wdgt="~~10~Personalised~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/personalized.jpeg" alt="Personalised Gifts"
+                                        style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Personalised</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div> -->
+                    <!-- <div class="category">
+                        <a href="https://giftkaro.in/catalogue/category/combo-offer_15/" data-wdgt="~~10~Combos~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/combos.jpg" alt="Combos Gifts Online" style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Combos</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div> -->
+                    <div class="category">
+                        <a href="{% url 'offer:list' %}" data-wdgt="~~6~Celebrity Video Messages~">
+                            <figure>
+                                <div class="thum aspectRation shopby">
+                                    <img src="static/oscar/assets/images/offers.jpg" alt="Celebrity Video Messages"
+                                        style="">
+                                </div>
+                                <figcaption>
+                                    <span class="p-name">Offers</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="beauty-health-blocks" class="beauty-health-wrapper grid--full grid--table grid-block-full">
+                <div class="beauty-health-inner">
+                    <div class="bh-top home-block-title">
+                        <div class="collection-name">
+                            <img class="collection-icon" src="static/oscar/assets/images/pic3.jpg" alt=""><a
+                                href="{{ homepage_url }}">Trending</a>
+                        </div>
+                        <!-- <div class="collection-tags">
+                            <ul class="bh-tags">
+                                <li class=""><a
+                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts_6/">Personalized
+                                        Gifts</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/cakes_1/">Cakes</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/flowers_2/">Flowers</a>
+                                </li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/dry-fruits_16/">Dry
+                                        Fruits</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/others_57/">Others</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/combo-offer_15/">Combo
+                                        Offers</a></li>
+                                <li class="link-to"><a href="{{ homepage_url }}">See all</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="bh-btm">
+                        <div class="grid__item three-quarters bh-left small--one-whole medium--one-whole">
+                            <div class="home-slideshow-block bh-slideshow">
+                                <div class="home-gallery-slider">
+                                    <div><a href="{{ homepage_url }}"><img src="static/oscar/assets/images/banner1.jpg"
+                                                alt=""></a>
+                                    </div>
+                                    <!-- <div><a href="{{ homepage_url }}"><img src="static/oscar/assets/images/6.jpg"
+                                                alt=""></a>
+                                    </div>
+
+                                    <div><a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/"><img
+                                                src="static/oscar/assets/images/29.jpg" alt=""></a>
+                                    </div>
+                                    <div><a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/"><img
+                                                src="static/oscar/assets/images/35.jpg" alt=""></a>
+                                    </div>
+                                    <div><a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/"><img
+                                                src="static/oscar/assets/images/67.jpg" alt=""></a>
+                                    </div> -->
+                                    <!-- <div><a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/"><img
+                                                src="static/oscar/assets/images/11.jpg" alt=""></a>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="home-products-block bh-products">
+                                <div class="home-products-block-title">
+                                    <span>Spotlight</span>
+                                </div>
+                                <div class="category-title">
+                                    <a href="https://giftkaro.in/catalogue/category/personalized-gifts_6/"
+                                        class="view-all">View All</a>
+                                </div>
+                                <div class="home-products-block-content">
+                                    <div class="home-products-slider">
+                                        <div class="grid__item">
+                                            {% for product in products %}
+                                            {% render_product product %}
+
+                                        </div>
+                                        <div class="grid__item">
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid__item one-quarter bh-right small--one-whole medium--one-whole">
+                            <div class="brands-area">
+                                <ul class="brands-elements">
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic1.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic2.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic3.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic4.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts_6/"><img
+                                                src="static/oscar/assets/images/pic5.jpg" alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic6.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic7.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic9.jpg"
+                                                alt=""></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="banner-area">
+                                <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/picture1.jpg"
+                                        alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="smartphones-blocks" class="smartphones-wrapper grid--full grid--table grid-block-full">
+                <div class="smartphones-inner">
+                    <div class="bh-top home-block-title">
+                        <div class="collection-name">
+                            <img class="collection-icon" src="static/oscar/assets/images/flowers.jpg" alt="">
+                            <a href="https://giftkaro.in/catalogue/category/flowers_2/">Best Seller </a>
+                        </div>
+                        <!-- <div class="collection-tags">
+                            <ul class="bh-tags">
+                                <li class=""><a
+                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts_6/">Personalized
+                                        Gifts</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/cakes_1/">Cakes</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/flowers_2/">Flowers</a>
+                                </li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/dry-fruits_16/">Dry
+                                        Fruits</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/others_57/">Others</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/combo-offer_15/">Combo
+                                        Offers</a></li>
+                                <li class="link-to"><a href="{{ homepage_url }}">See all</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="bh-btm">
+                        <div class="grid__item three-quarters bh-left small--one-whole medium--one-whole">
+                            <div class="home-slideshow-block bh-slideshow">
+                                <div class="home-gallery-slider">
+                                    <div><a href=""><img src="static/oscar/assets/images/banner1.jpg" alt=""></a>
+                                    </div>
+                                    <!-- <div><a href="https://giftkaro.in/catalogue/category/flowers_2/"><img
+                                                src="static/oscar/assets/images/42.jpg" alt=""></a>
+                                    </div> -->
+                                    <!-- <div><a href="https://giftkaro.in/catalogue/category/flowers_2/"><img
+                                                src="static/oscar/assets/images/11.jpg" alt=""></a>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="home-products-block bh-products">
+                                <div class="home-products-block-title">
+                                    <span>Spotlight</span>
+                                </div>
+                                <div class="category-title">
+                                    <a href="https://giftkaro.in/catalogue/category/flowers_2/" class="view-all">View
+                                        All</a>
+                                </div>
+                                <div class="home-products-block-content">
+                                    <div class="home-products-slider">
+                                        <div class="grid__item">
+                                            {% for product.get_product_class.name in products %}
+                                            {% for product in products %}
+                                            {% if product.get_product_class.name == "Shoes" %}
+                                            {% render_product product %}
+
+                                        </div>
+                                        <div class="grid__item">
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid__item one-quarter bh-right small--one-whole medium--one-whole">
+                            <div class="brands-area">
+                                <ul class="brands-elements">
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic1.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic2.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic3.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic4.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href=""><img src="static/oscar/assets/images/pic5.jpg" alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic6.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic7.jpg"
+                                                alt=""></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic9.jpg"
+                                                alt=""></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="banner-area">
+                                <a href="https://giftkaro.in/catalogue/category/flowers_2/"><img
+                                        src="static/oscar/assets/images/picture2.jpeg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div id="kids-blocks" class="kids-wrapper grid--full grid--table grid-block-full">
+                <div class="kids-inner">
+                    <div class="bh-top home-block-title">
+                        <div class="collection-name">
+                            <img class="collection-icon" src="static/oscar/assets/images/26.jpg" alt="">
+                            <a href="https://giftkaro.in/catalogue/category/cakes_1/">Cakes</a>
+                        </div>
+                        <div class="collection-tags">
+                            <ul class="bh-tags">
+                                <li class=""><a
+                                        href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts_6/">Personalized
+                                        Gifts</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/cakes_1/">Cakes</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/flowers_2/">Flowers</a>
+                                </li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/dry-fruits_16/">Dry
+                                        Fruits</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/others_57/">Others</a></li>
+                                <li class=""><a href="https://giftkaro.in/catalogue/category/combo-offer_15/">Combo
+                                        Offers</a></li>
+                                <li class="link-to"><a href="{{ homepage_url }}">See all</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bh-btm">
+                        <div class="bh-btm">
+                            <div class="grid__item three-quarters bh-left small--one-whole medium--one-whole">
+                                <div class="home-slideshow-block bh-slideshow">
+                                    <div class="home-gallery-slider">
+                                        <div><a href="https://giftkaro.in/catalogue/category/cakes_1/"><img
+                                                    src="static/oscar/assets/images/45.jpg" alt=""></a>
+                                        </div>
+                                        <div><a href="https://giftkaro.in/catalogue/category/cakes_1/"><img
+                                                    src="static/oscar/assets/images/64.jpg" alt=""></a>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                <div class="home-products-block bh-products">
+
+                                    <div class="home-products-block-title">
+                                        <span>{% trans "Spotlight" %}</span>
+                                    </div>
+                                    <div class="category-title">
+                                        <a href="https://giftkaro.in/catalogue/category/cakes_1/" class="view-all">View
+                                            All</a>
+                                    </div>
+                                    <div class="home-products-block-content">
+                                        <div class="home-products-slider">
+                                            <div class="grid__item">
+                                                {% for product.get_product_class.name in products %}
+                                                {% for product in products %}
+                                                {% if product.get_product_class.name == "Cakes" %}
+                                                {% render_product product %}
+
+                                            </div>
+                                            <div class="grid__item">
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="grid__item one-quarter bh-right small--one-whole medium--one-whole">
+                                <div class="brands-area">
+                                    <ul class="brands-elements">
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic1.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic2.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic3.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic4.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a
+                                                href="https://giftkaro.in/catalogue/category/gifts/personalized-gifts_6/"><img
+                                                    src="static/oscar/assets/images/pic5.jpg" alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic6.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic7.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{ homepage_url }}"><img src="static/oscar/assets/images/pic9.jpg"
+                                                    alt=""></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="banner-area">
+                                    <a href="https://giftkaro.in/catalogue/category/cakes_1/"><img
+                                            src="static/oscar/assets/images/8.jpg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    {% include "oscar/partials/my_footer.html" %}
+    </div>
+
+    <div id="scroll-to-top" title="Scroll to Top" class="off">
+        <i class="fa fa-caret-up"></i>
+    </div>
+
+    <!--div id="newsletter_popup" class="modal in fade" style="display: none;">
+		<div class="nl-wraper-popup tada-hidden">
+			<div class="nl-wraper-popup-inner">
+				<form action="#" method="post" name="mc-embedded-subscribe-form" target="_blank">
+					<div class="newsletter-popup-content">
+						<div class="top-area">
+							<span class="head-text1">Subscribe to our Newsletter &amp; receive a coupon for</span>
+							<span class="head-text2">10% off</span>
+						</div>
+						<div class="bottom-area">
+							<div class="group_input">
+								<input class="form-control" type="email" name="EMAIL" placeholder="Your Email address">
+								<button class="btn" type="submit">Get 10% off</button>
+							</div>
+							<span class="bottom-explain">We will send you a discount code after you confirm your email address.</span>
+						</div>
+						<div class="nl-social">
+							<div class="fi-content inline-list social-icons">
+								<a href="#" title="Twitter" class="icon-social twitter" data-toggle="tooltip" data-placement="top"><i class="fa fa-twitter-square"></i></a>
+								<a href="#" title="Facebook" class="icon-social facebook" data-toggle="tooltip" data-placement="top"><i class="fa fa-facebook-square"></i></a>
+								<a href="#" title="Google+" class="icon-social google" data-toggle="tooltip" data-placement="top"><i class="fa fa-google-plus-square"></i></a>
+								<a href="#" title="Pinterest" class="icon-social pinterest" data-toggle="tooltip" data-placement="top"><i class="fa fa-pinterest-square"></i></a>
+								<a href="#" title="Youtube" class="icon-social youtube" data-toggle="tooltip" data-placement="top"><i class="fa fa-youtube-square"></i></a>
+								<a href="#" title="Vimeo" class="icon-social vimeo" data-toggle="tooltip" data-placement="top"><i class="fa fa-vimeo-square"></i></a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div-->
+
+    <script>
+        var tada_index, tada_autosearchcomplete, tada_swiftype, tada_ads, tada_adsspeed, tada_slideshowtime,
+            tada_block1gallery = false,
+            tada_block1product = false,
+            tada_newsletter = false;
+        tada_index = 1;
+        tada_ads = 1;
+        tada_adsspeed = 5000;
+        tada_slideshowtime = 30000;
+        tada_block1gallery = true;
+        tada_block1product = true;
+        tada_newsletter = true;
+    </script>
+
+    <script src="static/oscar/assets/js/modernizr.min.js" type="text/javascript"></script>
+    <script src="static/oscar/assets/js/timber.js" type="text/javascript"></script>
+
+    <!-- <div id="quick-shop-modal" class="modal quick-shop" style="display:none;">
+        <div class="modal-dialog fadeIn">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="quick-shop-modal-bg">
+                    </div>
+                    <div class="grid__item one-half qs-product-image">
+                        <div id="quick-shop-image" class="product-image-wrapper">
+                            <div id="featuted-image" class="main-image featured">
+                                <img class="img-zoom img-responsive image-fly"
+                                    src="static/oscar/assets/images/demo1_qs_480x480.jpg"
+                                    data-zoom-image="assets/images/demo1_qs_480x480.jpg" alt="">
+                            </div>
+                            <div id="gallery_main_qs" class="product-image-thumb scroll scroll-mini">
+                                <div class="qs-vertical-slider product-single__thumbnails">
+                                    <a class="image-thumb active thumb__element"><img
+                                            src="static/oscar/assets/images/demo1_qs1_100x100.jpg" alt="" /></a>
+                                    <a class="image-thumb thumb__element"><img
+                                            src="static/oscar/assets/images/demo1_qs2_100x100.jpg" alt="" /></a>
+                                    <a class="image-thumb thumb__element"><img
+                                            src="static/oscar/assets/images/demo1_qs3_100x100.jpg" alt="" /></a>
+                                    <a class="image-thumb thumb__element"><img
+                                            src="static/oscar/assets/images/demo1_qs4_100x100.jpg" alt="" /></a>
+                                    <a class="image-thumb thumb__element"><img
+                                            src="static/oscar/assets/images/demo1_qs5_100x100.jpg" alt="" /></a>
+                                </div>
+                            </div>
+                            <div class="vertical-slider product-single__thumbnails" style="opacity: 0;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid__item one-half qs-product-information">
+                        <div id="quick-shop-container">
+                            <h3 id="quick-shop-title"><a href="./product.html">Corporis suscipit laboriosam</a></h3>
+                            <div class="rating-star">
+                                <span class="shopify-product-reviews-badge" data-id="3008529923"></span>
+                            </div>
+                            <div class="description">
+                                <div id="quick-shop-description" class="text-left">
+                                    <p>
+                                        Quisque vel enim quis purus ultrices consequat, sed tincidunt massa blandit
+                                        ipsum interdum tristique cras dictum, lacus eu molestie elementum nulla est
+                                        auctor. Etiam dan lorem quis ligula elementum porttitor quisem. Duis eget purus
+                                        urna fusce sed scelerisque ante. Lorem ipsum dolor sit amet conse...
+                                    </p>
+                                </div>
+                            </div>
+                            <form action="#" method="post" class="variants" id="AddToCartForm"
+                                enctype="multipart/form-data">
+                                <div id="quick-shop-price-container" class="detail-price">
+                                    <span class="price"><span class="money">$89.00</span></span>
+                                </div>
+                                <div class="quantity-wrapper clearfix">
+                                    <label class="wrapper-title">Quantity</label>
+                                    <div class="wrapper">
+                                        <span class="qty-down" title="Decrease" data-src="#qs-quantity">
+                                            <i class="fa fa-minus"></i>
+                                        </span>
+                                        <input type="text" id="qs-quantity" size="5" class="item-quantity"
+                                            name="quantity" value="1">
+                                        <span class="qty-up" title="Increase" data-src="#qs-quantity">
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="quick-shop-variants-container" class="variants-wrapper"
+                                    style="display: block;">
+                                    <div class="selector-wrapper">
+                                        <label for="#quick-shop-variants-3008529731-option-0">Size</label>
+                                        <select class="single-option-selector" data-option="option1"
+                                            id="#quick-shop-variants-3008529731-option-0">
+                                            <option value="XS">XS</option>
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                        </select>
+                                    </div>
+                                    <div class="selector-wrapper">
+                                        <label for="#quick-shop-variants-3008529731-option-1">Color</label>
+                                        <select class="single-option-selector" data-option="option2"
+                                            id="#quick-shop-variants-3008529731-option-1">
+                                            <option value="Black">Black</option>
+                                            <option value="Red">Red</option>
+                                            <option value="Green">Green</option>
+                                            <option value="Blue">Blue</option>
+                                            <option value="White">White</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="others-bottom">
+                                    <input id="AddToCart" class="btn btn-1 small add-to-cart" type="submit" name="add"
+                                        value="Buy Now">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            if ($('.quantity-wrapper').length) {
+                $('.quantity-wrapper').on('click', '.qty-up', function () {
+                    var $this = $(this);
+                    var qty = $this.data('src');
+                    $(qty).val(parseInt($(qty).val()) + 1);
+                });
+                $('.quantity-wrapper').on('click', '.qty-down', function () {
+                    var $this = $(this);
+                    var qty = $this.data('src');
+                    if (parseInt($(qty).val()) > 1)
+                        $(qty).val(parseInt($(qty).val()) - 1);
+                });
+            }
+        });
+    </script>
+
+</body>

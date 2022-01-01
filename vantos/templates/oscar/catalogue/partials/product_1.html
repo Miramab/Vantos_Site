@@ -1,0 +1,66 @@
+{% load display_tags %}
+{% load i18n %}
+{% load image_tags %}
+{% load reviews_tags %}
+
+{% block product %}
+<div class="grid__item">
+    <div class="grid__item_wrapper">
+        {% block product_image %}
+        <div class="grid__image product-image">
+            {% with image=product.primary_image %}
+            {% oscar_thumbnail image.original "x155" upscale=False as thumb %}
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{{ thumb.url }}" alt="{{ product.get_title }}">
+            </a>
+            {% endwith %}
+            <div class="quickview">
+                <div class="product-ajax-cart hidden-xs hidden-sm">
+                    <div data-handle="consequuntur-magni-dolores" class="quick_shop-div">
+                        <a href="#quick-shop-modal" class="btn quick_shop">
+                            <i class="fa fa-eye" title="Quick View"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+        {% block product_review %}
+        {% iffeature "reviews" %}
+        <div class="rating-star">
+            <span class="spr-badge" id="spr_badge_3008529987" data-rating="0.0">
+                <span class="spr-starrating spr-badge-starrating">
+                    <i class="spr-icon spr-icon-star-empty" style=""></i>
+                    <i class="spr-icon spr-icon-star-empty" style=""></i>
+                    <i class="spr-icon spr-icon-star-empty" style=""></i>
+                    <i class="spr-icon spr-icon-star-empty" style=""></i>
+                    <i class="spr-icon spr-icon-star-empty" style=""></i>
+                </span>
+                <span class="spr-badge-caption">No reviews </span>
+            </span>
+        </div>
+        {% endiffeature %}
+        {% endblock %}
+
+        {% block product_title %}
+        <p class="h6 product-title">
+            <a href="{{ product.get_absolute_url }}">{{ product.get_title|truncatewords:4 }}</a>
+        </p>
+        {% endblock %}
+
+        {% block product_price %}
+        <p class="product-price">
+            {% include "oscar/catalogue/partials/stock_record.html" %}
+            {% if not product.is_parent and not product.has_options %}
+            {% include "oscar/catalogue/partials/add_to_basket_compact_1.html" %}
+            {% endif %}
+            <strong>On Sale</strong>
+            <span class="money" data-currency-usd="$19.99">$19.99</span>
+            <span class="visually-hidden">Regular price</span>
+            <s><span class="money" data-currency-usd="$24.99">$24.99</span></s>
+        </p>
+        {% endblock %}
+
+    </div>
+</div>
+{% endblock %}

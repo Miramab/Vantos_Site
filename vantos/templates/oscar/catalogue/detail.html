@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+{% load history_tags %}
+{% load currency_filters %}
+{% load reviews_tags %}
+{% load product_tags %}
+{% load display_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+{% load static %}
+
+<html class="supports-js supports-no-touch supports-csstransforms supports-csstransforms3d supports-fontface">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
+    <!-- Font ================================================== -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,500,600,700">
+    <!-- Font ================================================== -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,500,600,700">
+    <!-- Helpers ================================================== -->
+    <!-- <meta property="og:type" content="website"> -->
+
+    <!-- <meta property="og:image" content="{% static "oscar/assets/images/giftkaro_logo.png" %}">
+        <meta property="og:image:secure_url" content="{% static "oscar/assets/images/giftkaro_logo.png" %}"> -->
+    <!-- <meta property="og:url" content="#">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:card" content="summary"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% block favicon %}
+    <link rel="shortcut icon" href="{% static "oscar/assets/favicon.ico" %}" />
+    {% endblock %}
+    <!-- CSS ================================================== -->
+    <!-- <link href="{% static "oscar/assets/css/jquery.fancybox.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+    <!-- <link rel="stylesheet" href="{% static "oscar/assets/css/font-awesome.min.css" %}"> -->
+    <!-- <link href="{% static "oscar/assets/css/animate.min.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+    <!-- <link href="{% static " oscar/assets/css/swatch.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+    <!-- <link href="{% static "oscar/assets/css/owl.carousel.min.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+    <!-- <link href="{% static "oscar/assets/css/flexslider.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+    <link href="{% static "oscar/assets/css/timber.scss.css" %}" rel="stylesheet" type="text/css" media="all">
+    <link href="{% static "oscar/assets/css/home_market.global.scss.css" %}" rel="stylesheet" type="text/css"
+        media="all">
+    <link href="{% static "oscar/assets/css/home_market.style.scss.css" %}" rel="stylesheet" type="text/css"
+        media="all">
+    <!-- <link href="{% static "oscar/assets/css/tada.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+    <!-- <link href="{% static "oscar/assets/css/spr.css" %}" rel="stylesheet" type="text/css" media="all"> -->
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- JS ================================================== -->
+    <!-- <script src="{% static "oscar/assets/js/jquery.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.fancybox.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/owl.carousel.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.tweet.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.optionSelect.js" %}" type="text/javascript"></script>
+    <script src="{% static "oscar/assets/js/jquery.flexslider-min.js" %}" type="text/javascript"></script> -->
+</head>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap');
+
+    :root {
+        --orange: hsl(26, 100%, 55%);
+        --orange-pale: hsl(25, 100%, 94%);
+        --very-dark-blue: hsl(220, 13%, 13%);
+        --dark-grayish-blue: hsl(219, 9%, 45%);
+        --grayish-blue: hsl(220, 14%, 75%);
+        --light-grayish-blue: hsl(223, 64%, 98%);
+        --white: hsl(0, 0%, 100%);
+        --black: hsl(0, 0%, 0%);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Kumbh Sans', sans-serif;
+        font-size: 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .Link-reference {
+        display: block;
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .Link-reference:hover {
+        text-decoration: underline;
+    }
+
+    .Container {
+        margin: 0 auto;
+    }
+
+
+    .Product {
+        padding: 15px;
+    }
+
+    .Product-company {
+        color: var(--orange);
+        font-weight: 400;
+    }
+
+    .Product-name {
+        margin: 15px 0;
+        font-weight: 700;
+        line-height: 35px;
+    }
+
+    .Product-description {
+        color: var(--dark-grayish-blue);
+        font-weight: 400;
+        margin: 15px 0;
+        line-height: 25px;
+    }
+
+    .Product-prices {
+        align-items: center;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 0;
+    }
+
+    .Product-discounted {
+        font-size: 25px;
+    }
+
+    .Product-discount {
+        background-color: var(--orange-pale);
+        border-radius: 5px;
+        color: var(--orange);
+        font-size: 13px;
+        margin-left: 10px;
+        position: relative;
+        top: -5px;
+        padding: 3px 15px;
+    }
+
+    .Product-original {
+        color: var(--dark-grayish-blue);
+    }
+
+    .Button {
+        border: transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        padding: 15px 0;
+    }
+
+    .Button--primary {
+        background-color: var(--orange);
+        border: 1px solid var(--orange);
+        color: var(--white);
+    }
+
+    .Button--primary:hover {
+        background-color: var(--white);
+        color: var(--orange);
+    }
+
+    .Button--number {
+        background-color: rgba(0, 0, 0, 0);
+        color: var(--orange);
+        font-size: 25px;
+        font-weight: 700;
+        width: auto;
+        padding: 10px 15px;
+    }
+
+    .Product-quantity {
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        display: flex;
+        font-weight: 700;
+        justify-content: space-between;
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    .Carrousel {
+        width: 100%;
+        height: 300px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .Carrousel-active {
+        background-color: #e6e6e6;
+        width: 100%;
+        height: 100%;
+    }
+
+    .Carrousel-items {
+        display: none;
+    }
+
+    .Carrousel--actions {
+        position: absolute;
+        top: 45%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .Button--circle {
+        align-items: center;
+        background-color: var(--white);
+        border: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--black);
+        display: flex;
+        font-size: 20px;
+        justify-content: center;
+        padding: 15px;
+        width: 40px;
+        height: 40px;
+    }
+
+    @media (min-width: 480px) {
+        .Container {
+            width: 900px;
+            margin: 0 auto;
+        }
+
+
+        .Product {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .Carrousel {
+            background-color: red;
+            height: 350px;
+            width: 80%;
+        }
+
+        .Carrousel-items {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .Carrousel-items .Carrousel-item {
+            background-color: #e6e6e6;
+            width: 75px;
+            height: 75px;
+        }
+
+        .Product-content {
+            padding: 30px 0 0 80px;
+            width: 100%;
+        }
+
+        .Product-prices {
+            flex-direction: column;
+            align-items: normal;
+        }
+
+        .Product-original {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .Product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .Product-quantity,
+        .Product-actions .Button {
+            width: 45%;
+        }
+    }
+</style>
+{% include "oscar/partials/navbar.html" %}
+
+
+
+{% block content %}
+<div class="Container">
+    <div class="Product">
+        {% block product_gallery %}
+        <div class="col-sm-6">
+            {% include "oscar/catalogue/partials/gallery.html" %}
+        </div>
+        {% endblock %}
+
+
+        {% block product_main %}
+        <div class="Product-content">
+            <h2 class="Product-company">{{ product.get_title }}</h2>
+
+            <!-- <h1 class="Product-name">Fall limited Edition Sneakers</h1> -->
+
+            {% iffeature "reviews" %}
+            {% include "oscar/catalogue/reviews/partials/review_stars.html" %}
+            {% endiffeature %}
+            {% iffeature "reviews" %}
+            <tr>
+                <th>{% trans "Number of reviews" %}</th>
+                <td>{{ product.num_approved_reviews }}</td>
+            </tr>
+            {% endiffeature %}
+            {% block product_description %}
+            {% if product.description %}
+            <div id="product_description" class="sub-header">
+                <h2>{% trans "Product Description" %}</h2>
+            </div>
+            <p>{{ product.description|safe }}</p>
+            {% endif %}
+            {% endblock %}
+            <!-- <p class="Product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione numquam
+                soluta saepe quibusdam rerum optio? Veniam id, alias culpa voluptatum assumenda fugit consequuntur sint
+                quia perspiciatis atque non mollitia in?</p> -->
+
+
+            {% block product_stock_record %}
+
+            <div class="Product-prices">
+                {% include "oscar/catalogue/partials/stock_record.html" with verbose=1 %}
+
+                <!-- <p class="Product-discounted">$125.00 <span class="Product-discount">50%</span></p>
+                <p class="Product-original">$250.00</p> -->
+            </div>
+            {% endblock %}
+
+            {% if not product.is_parent %}
+            {% block product_basket_form %}
+            {% include "oscar/catalogue/partials/add_to_basket_form.html" %}
+            {% endblock %}
+            {% else %}
+            {% block variants %}
+            <h2>{% trans 'Variants:' %}</h2>
+            {% for child in product.children.public %}
+            {% purchase_info_for_product request child as child_session %}
+            {% if child_session.availability.is_available_to_buy %}
+            <a href="{{ child.get_absolute_url }}">{{ child.get_title }}</a><br>
+            {% endif %}
+            {% endfor %}
+            {% endblock %}
+            {% endif %}
+
+            <div class="Product-actions">
+                <!-- <div class="Product-quantity">
+                    <button type="button" class="Button Button--number">-</button>
+                    <span class="Product-quantity-value">2</span>
+                    <button type="button" class="Button Button--number">+</button>
+                </div> -->
+                <button type="button" class="Button Button--primary">
+                    <i class="Navbar-cart fas fa-shopping-cart"></i>
+                    Add to cart
+                </button>
+            </div>
+        </div>
+        {% endblock %}
+
+    </div>
+    {% iffeature "reviews" %}
+    {% block product_review %}
+    <section>
+        <div id="reviews" class="sub-header">
+            {% if product.num_approved_reviews > 3 %}
+            <a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}"
+                class="btn pull-right">{% trans "See all reviews" %}</a>
+            {% endif %}
+            <h2>{% trans "Customer Reviews" %}</h2>
+        </div>
+
+        {% if product.num_approved_reviews == 0 %}
+        <p>
+            {% if product|is_review_permitted:user %}
+            {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
+            {% blocktrans %}This product does not have any reviews yet -
+            <a href="{{ add_review_url }}#addreview">be the first to write one</a>.
+            {% endblocktrans %}
+            {% else %}
+            {% trans "This product does not have any reviews yet" %}.
+            {% endif %}
+        </p>
+        {% else %}
+        <ol class="list-unstyled review-list">
+            {% for review in product.reviews.approved.all|slice:":3" %}
+            <li>
+                {% include 'oscar/catalogue/partials/review.html' %}
+            </li>
+            {% endfor %}
+        </ol>
+        {% endif %}
+    </section>
+    {% endblock product_review %}
+    {% endiffeature %}
+    {% block product_info %}
+    <div class="sub-header">
+        <h2>{% trans "Product Information" %}</h2>
+    </div>
+    <table class="table table-striped">
+        <!-- {% if product.upc %}
+        <tr>
+            <th>{% trans "UPC" %}</th><td>{{ product.upc }}</td>
+        </tr>
+        {% endif %} -->
+        <tr>
+            <th>{% trans "Product Type" %}</th>
+            <td>{{ product.get_product_class.name }}</td>
+        </tr>
+
+        {% purchase_info_for_product request product as session %}
+        {% if session.price.exists %}
+        <!-- <tr>
+                <th>{% trans "Price (excl. tax)" %}</th><td>{{ session.price.excl_tax|currency:session.price.currency }}</td>
+            </tr>
+            {% if session.price.is_tax_known %}
+                <tr>
+                    <th>{% trans "Price (incl. tax)" %}</th><td>{{ session.price.incl_tax|currency:session.price.currency }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans "Tax" %}</th><td>{{ session.price.tax|currency:session.price.currency }}</td>
+                </tr>
+            {% endif %} -->
+        <tr>
+            <th>{% trans "Availability" %}</th>
+            <td>{{ session.availability.message }}</td>
+        </tr>
+        {% endif %}
+        {% for av in product.attribute_values.all %}
+        <tr>
+            <th>{{ av.attribute.name }}</th>
+            <td>{{ av.value_as_html }}</td>
+        </tr>
+        {% endfor %}
+        {% iffeature "reviews" %}
+        <tr>
+            <th>{% trans "Number of reviews" %}</th>
+            <td>{{ product.num_approved_reviews }}</td>
+        </tr>
+        {% endiffeature %}
+    </table>
+    {% endblock %}
+
+
+</div>
+{% include "oscar/partials/my_footer.html" %}
+
+{% endblock content %}

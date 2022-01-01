@@ -1,0 +1,75 @@
+{% load basket_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+{% purchase_info_for_product request product as session %}
+
+<style>
+    .grid__item .grid__item_wrapper .action-button .add-to-cart-form .btn {
+        width: 100%;
+        padding: 0 15px;
+        text-align: left;
+        border: 1px solid red;
+    }
+
+    .grid__item .grid__item_wrapper .action-button li .btn {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        text-align: center;
+        line-height: 28px;
+        background: #fff;
+        border: 1px solid #ccc;
+        color: red;
+        font-size: 11px;
+        transition: all 0.5s ease 0s;
+        -webkit-transition: all 0.5s ease 0s;
+    }
+</style>
+
+{% if session.availability.is_available_to_buy %}
+{% basket_form request product 'single' as basket_form %}
+<ul class="action-button">
+    <li class="add-to-cart-form">
+        <form action="{% url 'basket:add' pk=product.pk %}" method="post" enctype="multipart/form-data"
+            id="AddToCartForm" class="form-vertical">
+            {% csrf_token %}
+            {{ basket_form.as_p }}
+            <div class="effect-ajax-cart">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" name="add" id="AddToCart" class="btn btn-1 add-to-cart" title="Add to Cart"
+                    data-loading-text="{% trans 'Adding...' %}">
+                    <span id="AddToCartText"><i class="fa fa-shopping-cart"></i>{% trans "Gift Now" %}</span>
+                </button>
+            </div>
+        </form>
+    </li>
+
+    <li class="wishlist">
+        <a class="wish-list btn" href="https://www.instagram.com/best_gift_today/" title="Order on Instagram">
+            <i class="fa fa-instagram" title="Message now" aria-hidden="true"></i>
+        </a>
+    </li>
+    <li class="add-to-cart-form">
+        <div class="effect-ajax-cart">
+            <a href="tel:+918006288642" type="submit" name="add" id="AddToCart" class="btn btn-1 add-to-cart"
+                title="Order on Call" >
+                <span id="AddToCartText"><i class="fa fa-phone"></i>{% trans "Call Now" %}</span>
+            </a>
+        </div>
+    </li>
+
+    <li class="email">
+        <a target="_blank" class="btn email-to-friend" href="https://api.whatsapp.com/send/?phone=918006288642&text=hello&app_absent=0"><i class="fa fa-whatsapp"
+                title="Order on Whatsapp"></i></a>
+    </li>
+
+    <!-- <li class="wishlist">
+        <a class="wish-list btn" href="./wish-list.html"><i class="fa fa-heart" title="Wishlist"></i></a>
+    </li> -->
+    <!-- <li class="email">
+        <a target="_blank" class="btn email-to-friend" href="#"><i class="fa fa-envelope"
+                title="Email to friend"></i></a>
+    </li> -->
+</ul>
+{% endif %}
