@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-0a4+yll11e403b@oghamvtq&1wx=#yqlhf@w8g592u+=y01&m8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["159.89.42.7" , "www.thevantos.com"]
 
 
 # Application definition
@@ -155,17 +155,31 @@ WSGI_APPLICATION = 'vantos.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#         'ATOMIC_REQUESTS': True,
+#     }
+# }
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Vantos',
+        'USER': 'vantosuser',
+        'PASSWORD': 'Mirzamab800',
+        'HOST': 'localhost',
         'PORT': '',
-        'ATOMIC_REQUESTS': True,
     }
 }
+
 
 
 # HAYSTACK_CONNECTIONS = {
