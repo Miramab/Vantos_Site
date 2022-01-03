@@ -172,7 +172,7 @@ WSGI_APPLICATION = 'vantos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vantosDB',
+        'NAME': 'vantosdb',
         'USER': 'mirzauser',
         'PASSWORD': 'Mirzamab800',
         'HOST': 'localhost',
